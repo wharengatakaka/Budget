@@ -1,6 +1,7 @@
 name: budget
 services:
   postgres:
+    container_name: budget-postgres
     image: postgres:16-alpine
     environment:
       - POSTGRES_DB=budget_production
@@ -11,6 +12,7 @@ services:
     restart: unless-stopped
 
   api:
+    container_name: budget-api
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -51,6 +53,7 @@ services:
       traefik.http.middlewares.budgetrails-headers.headers.customResponseHeaders.Referrer-Policy: "strict-origin-when-cross-origin"
 
   worker:
+    container_name: budget-worker
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -71,6 +74,7 @@ services:
     restart: unless-stopped
 
   web:
+    container_name: budget-web
     build:
       context: ./web
       dockerfile: Dockerfile
